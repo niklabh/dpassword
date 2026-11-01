@@ -32,3 +32,4 @@
 - Motoko text literals have no backslash-newline line continuation; a trailing backslash is an illegal escape (M0002). Use \n escapes on one physical line.
 - OQL Entity.manual with .ownedBy and .scopedPerUser scopes a nested Map<Principal, Map<Id, Record>> by promoting the outer key into an owner payload column; Entity.payload needs the matching implicit value instance imported (IntValue for Int/Timestamp, NatValue for Nat).
 - TS 7 rejects Uint8Array<ArrayBufferLike> as BufferSource; narrow via a toBufferSource helper cast.
+- README.md at the project root documents dPassword: zero-knowledge vault, HKDF/AES-GCM browser crypto, Motoko canister, Internet Identity, project layout and run commands.
