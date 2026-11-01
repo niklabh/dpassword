@@ -1,0 +1,21 @@
+{
+  "overview": "dPassword is a zero-knowledge, end-to-end encrypted notes and password manager where everything is encrypted in the browser before it reaches the canister.",
+  "features": [
+    "Sign in with Internet Identity",
+    "Secure Notes with title, tags and markdown body",
+    "Vault Passwords with site, username, password and URL",
+    "Built-in random password generator",
+    "Live search across your items",
+    "Per-user key derivation so only you can decrypt your vault",
+    "Session timeout indicator and manual Lock Vault that wipes decrypted data from memory"
+  ],
+  "category": "password-manager",
+  "tags": [
+    "security",
+    "encryption",
+    "notes",
+    "passwords",
+    "productivity"
+  ],
+  "last_updated": "2026-11-01T16:22:05.355Z"
+}

@@ -1,0 +1,121 @@
+type VaultError = 
+ variant {
+   notAuthorized;
+   notFound: ItemId;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type StoreItemRequest = 
+ record {
+   ciphertext: blob;
+   id: opt ItemId;
+   iv: blob;
+   kind: ItemKind;
+ };
+type Result__1 = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Result_3 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result_2 = 
+ variant {
+   err: VaultError;
+   ok;
+ };
+type Result_1 = 
+ variant {
+   err: VaultError;
+   ok: EncryptedItem;
+ };
+type Result = 
+ variant {
+   err: VaultError;
+   ok: ItemId;
+ };
+type ItemSummary = 
+ record {
+   createdAt: Timestamp;
+   id: ItemId;
+   kind: ItemKind;
+   updatedAt: Timestamp;
+ };
+type ItemKind = 
+ variant {
+   secureNote;
+   vaultPassword;
+ };
+type ItemId = nat;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type EncryptedItem = 
+ record {
+   ciphertext: blob;
+   createdAt: Timestamp;
+   id: ItemId;
+   iv: blob;
+   kind: ItemKind;
+   updatedAt: Timestamp;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result_3);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Delete one of the caller's items.
+  delete_item: (id: ItemId) -> (Result_2);
+  execute: (qJson: text) -> (Result__1) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Read one of the caller's items, including ciphertext and iv.
+  get_encrypted_item: (id: ItemId) -> (Result_1) query;
+  /// List the caller's items as non-secret summaries.
+  get_encrypted_items: () -> (vec ItemSummary) query;
+  isCallerAdmin: () -> (bool) query;
+  schema: () -> (text) query;
+  /// Create or update an encrypted item owned by the caller.
+  store_encrypted_item: (request: StoreItemRequest) -> (Result);
+}

@@ -1,0 +1,70 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type EncryptedItem__216130403 =
+  {
+    ciphertext : Blob;
+    createdAt : Int;
+    id : Nat;
+    iv : Blob;
+    kind : ItemKind__845555550;
+    updatedAt : Int
+  };
+type EncryptedItem__918850830 =
+  {
+    ciphertext : Blob;
+    createdAt : Timestamp__301639476;
+    id : ItemId__833640393;
+    iv : Blob;
+    kind : ItemKind__47108045;
+    updatedAt : Timestamp__301639476
+  };
+type IdState__956506882 = {var nextId : Nat};
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type ItemId__833640393 = Nat;
+type ItemKind__47108045 = {#secureNote; #vaultPassword};
+type ItemKind__845555550 = {#secureNote; #vaultPassword};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__769816496 =
+  {
+    accessControlState : AccessControlState__201339279;
+    ids : IdState__956506882;
+    vault : VaultState__809247427
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__512397517 = {};
+type Timestamp__301639476 = Int;
+type UserRole__91647283 = {#admin; #guest; #user};
+type VaultState__809247427 =
+  Map__230067015<Principal, Map__230067015<Nat, EncryptedItem__216130403>>;
+{
+  "00000000_000000" : OldActor__512397517 -> NewActor__769816496
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable ids : {var nextId : ItemId__833640393};
+  stable vault :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<ItemId__833640393,
+                                         EncryptedItem__918850830>>;
+      var size : Nat__227979830
+    }
+};
